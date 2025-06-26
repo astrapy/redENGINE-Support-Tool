@@ -3,7 +3,6 @@
 ###############################
 import sys
 import os
-import logging
 import ctypes
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QSplitter,
@@ -13,15 +12,18 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QFont, QIcon, QPixmap, QColor, QPalette, QLinearGradient, QPainter, QMovie
 from PyQt6.QtCore import Qt, QSize
 
+from src.logging import init_logging, get_logger, get_log_file_path
+
+
 ###############################
 # GLOBAL CONFIG
 ###############################
 DEBUG_MODE = False
-LOG_FILE = 'redengine.log'
-LOGO_PATH = 'logo.gif'
+LOG_FILE = 'log/redengine.log'
+LOGO_PATH = 'assets/logo.gif'
 
-logger = logging.getLogger('RedEngineSupportTool')
-logger.setLevel(logging.DEBUG if DEBUG_MODE else logging.INFO)
+init_logging()
+logger = get_logger()
 
 ###############################
 # ERROR DEFINITIONS
@@ -173,13 +175,6 @@ class RedEngineSupportTool(QMainWindow):
         return QIcon(pixmap)
 
     def init_ui(self):
-        # Configure logging
-        logging.basicConfig(
-            filename=LOG_FILE if not DEBUG_MODE else None,
-            level=logging.DEBUG if DEBUG_MODE else logging.INFO,
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-        )
-        logger = logging.getLogger('RedEngineSupportTool')
         
         
         
